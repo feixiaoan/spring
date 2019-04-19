@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- 定义目标对象 -->
+	<bean id="testDao" class="com.xiaofei.dao.impl.TestDaoImpl"/>
+	<!-- 创建一个切面 -->
+	<bean id="myAspect" class="com.xiaofei.aspect.MyAspect"/>
+	<!-- 使用spring代理工厂定义一个名为testDaoProxy的代理对象 -->
+	<bean id="testDaoProxy" class=
+					"org.springframework.aop.framework.ProxyFactoryBean">
+		<!-- 指定代理实现的接口 -->
+		<property name="proxyInterfaces" value="com.xiaofei.dao.TestDao"/>
+		<!-- 指定目标对象 -->
+		<property name="target" ref="testDao"/>
+		<!-- 指定切面，织入环绕通知 -->
+		<property name="interceptorNames" value="myAspect"/>
+		<!-- 指定代理方式，true指定CGLIB动态代理，默认为false，指定JDK动态代理 -->
+		<property name="proxyTargetClass" value="true"/>		
+	</bean>
+</beans>
