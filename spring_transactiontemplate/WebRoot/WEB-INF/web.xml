@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>spring_01</display-name>
+  <!-- 指定spring配置文件的位置，多个配置文件用逗号分隔 -->
+ <context-param>
+ 	<param-name>contextConfigLocation</param-name>
+ 	<!-- spring 加载applicationContext.xml文件 -->
+ 	<param-value>
+ 		classpath:applicationContext.xml
+ 	</param-value>
+ </context-param>
+ <!--  -->
+ <listener>
+ 	<listener-class>
+		org.springframework.web.context.ContextLoaderListener 	
+ 	</listener-class>
+ </listener>
+</web-app>
