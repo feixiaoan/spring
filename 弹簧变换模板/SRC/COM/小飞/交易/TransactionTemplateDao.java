@@ -12,43 +12,42 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 @Repository("transactionTemplateDao")
 public class TransactionTemplateDao {
-	//Ê¹ÓÃÅäÖÃÎÄ¼şÖĞµÄJDBCÄ£°å
+	//ä½¿ç”¨é…ç½®æ–‡ä»¶ä¸­çš„JDBCæ¨¡æ¿
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	@Autowired
 	private TransactionTemplate transactionTemplate;
 	String message = "";
 	public String test() {
-		//ÒÔÄäÃûÄÚ²¿ÀàµÄ·½Ê½ÊµÏÖTransactionCallback½Ó¿Ú£¬Ê¹ÓÃÄ¬ÈÏµÄÊÂÎñÌá½»ºÍ»Ø¹ö¹æÔò
-		//ÔÚÒµÎñ´úÂëÖĞ²»ĞèÒªÏÔÊ¾µ÷ÓÃÈÎºÎ´¦ÀíÊÂÎñµÄAPI
+		//ä»¥åŒ¿åå†…éƒ¨ç±»çš„æ–¹å¼å®ç°TransactionCallbackæ¥å£ï¼Œä½¿ç”¨é»˜è®¤çš„äº‹åŠ¡æäº¤å’Œå›æ»šè§„åˆ™
+		//åœ¨ä¸šåŠ¡ä»£ç ä¸­ä¸éœ€è¦æ˜¾ç¤ºè°ƒç”¨ä»»ä½•å¤„ç†äº‹åŠ¡çš„API
 		transactionTemplate.execute(new TransactionCallback<Object>() {
 
 			@Override
 			public Object doInTransaction(TransactionStatus arg0) {
-				//É¾³ı±íÖĞÊı¾İ
+				//åˆ é™¤è¡¨ä¸­æ•°æ®
 				String sql = "delete from user";
-				//Ìí¼ÓÊı¾İ
+				//æ·»åŠ æ•°æ®
 				String sql1 = "insert into user values(?, ?, ?)";
 				Object param[] ={
 					1,
-					"ãÆ¶ù×Ó",
-					"Å®"
+					"é—«å„¿å­",
+					"å¥³"
 				};
 				try {
-					//ÏÈÉ¾³ıÊı¾İ
+					//å…ˆåˆ é™¤æ•°æ®
 					jdbcTemplate.update(sql);
-					//Ìí¼ÓÒ»ÌõÊı¾İ
+					//æ·»åŠ ä¸€æ¡æ•°æ®
 					jdbcTemplate.update(sql1, param);
-					//Ìí¼ÓÏàÍ¬µÄÒ»ÌõÊı¾İ£¬Ê¹Ö÷¼üÖØ¸´
+					//æ·»åŠ ç›¸åŒçš„ä¸€æ¡æ•°æ®ï¼Œä½¿ä¸»é”®é‡å¤
 					jdbcTemplate.update(sql1, param);
-					message = "Ö´ĞĞ³É¹¦£¬Ã»ÓĞÊÂÎñ»Ø¹ö";
+					message = "æ‰§è¡ŒæˆåŠŸï¼Œæ²¡æœ‰äº‹åŠ¡å›æ»š";
 				} catch (Exception e){
-					message = "Ö÷¼üÖØ¸´ÊÂÎñ»Ø¹ö";
+					message = "ä¸»é”®é‡å¤äº‹åŠ¡å›æ»š";
 					e.printStackTrace();
 				}
 				return message;
 			}
-			
 			
 		});
 		return message;
